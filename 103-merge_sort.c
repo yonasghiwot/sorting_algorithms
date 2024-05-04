@@ -57,7 +57,7 @@ void merge_sort(int *array, size_t size)
 		return;
 
 	mid = size / 2;
-	
+
 	for (i = 0; i < mid; i++)
 		left[i] = array[i];
 
