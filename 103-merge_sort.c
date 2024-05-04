@@ -1,70 +1,89 @@
 #include "sort.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 /**
- * merge - a function that sort array using merge sort
- * @array: array of integers to be sorted
- * @size: size of array
- * @l: pointer to left array
- * @r: pointer to right array
- **/
-void merge(int *array, int *l, int *r, size_t size)
+ * Top_down_Merge- function taht sorts and merges the sub arrays in source
+ * @start: starting index for left sub array
+ * @middle: end index for left sub array and
+ * starting index for the right sub array
+ * @end: end index for the right sub array
+ * @dest: destination for data
+ * @source: source of data
+ *
+ * Return: void
+ */
+void Top_down_Merge(size_t start, size_t middle, size_t end, int *dest, int *source)
 {
-	int i = 0, j = 0, k = 0;
-	int size_left, size_right;
+	size_t i, j, k;
 
-	size_left = size / 2;
-	size_right = size - size_left;
 	printf("Merging...\n");
 	printf("[left]: ");
-	print_array(l, size_left);
+	print_array(source + start, middle - start);
 	printf("[right]: ");
-	print_array(r, size_right);
-
-	while (i < size_left && j < size_right)
+	print_array(source + middle, end - middle);
+	i = start;
+	j = middle;
+	for (k = start; k < end; k++)
 	{
-		if (l[i] < r[j])
-			array[k++] = l[i++];
+		if (i < middle && (j >= end || source[i] <= source[j]))
+		{
+			dest[k] = source[i];
+			i++;
+		}
 		else
-			array[k++] = r[j++];
+		{
+			dest[k] = source[j];
+			j++;
+		}
 	}
-
-	while (i < size_left)
-		array[k++] = l[i++];
-
-	while (j < size_right)
-		array[k++] = r[j++];
-	printf("[Merge]: ");
-	print_array(array, size);
+	printf("[Done]: ");
+	print_array(dest + start, end - start);
 }
+
 /**
- * merge_sort - sorts array of integers in ascending
- * order using Top down merge sort algorithm
- * sort algorithm
- * @array: pointer to array
- * @size: size of array
- **/
+ * Top_Down_SplitMerge - recursively splits the array and merges the sorted arrays
+ * @start: starting index (inclusive)
+ * @end: end index (exclusive)
+ * @array: the array to sort
+ * @copy: copy of the array
+ *
+ * Return: void
+ */
+void Top_Down_SplitMerge(size_t start, size_t end, int *array, int *copy)
+{
+	size_t middle;
+
+	if (end - start < 2)
+		return;
+	middle = (start + end) / 2;
+	Top_Down_SplitMerge(start, middle, array, copy);
+	Top_Down_SplitMerge(middle, end, array, copy);
+	Top_Down_Merge(start, middle, end, array, copy);
+	for (middle = start; middle < end; middle++)
+		copy[middle] = array[middle];
+}
+
+/**
+ * merge_sort - sorts an array of integers in ascending 
+ * order using the Merge sort algorithm
+ * @array: array to sort
+ * @size: size of the array
+ *
+ * Return: void
+ */
 void merge_sort(int *array, size_t size)
 {
-	size_t mid = 0, i;
-	int left[1000];
-	int right[1000];
+	size_t i;
+	int *copy;
 
-	if (!array)
+	if (array == NULL || size < 2)
 		return;
-
-	if (size < 2)
+	copy = malloc(sizeof(int) * size);
+	if (copy == NULL)
 		return;
-
-	mid = size / 2;
-
-	for (i = 0; i < mid; i++)
-		left[i] = array[i];
-
-	for (i = mid; i < size; i++)
-		right[i - mid] = array[i];
-
-	merge_sort(left, mid);
-	merge_sort(right, size - mid);
-	merge(array, left, right, size);
+	for (i = 0; i < size; i++)
+		copy[i] = array[i];
+	Top_Down_SplitMerge(0, size, array, copy);
+	free(copy);
 }
