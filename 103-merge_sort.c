@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 /**
- * merge -  sort array using merge sort
- * @array: array if ints
+ * merge - a function that sort array using merge sort
+ * @array: array of integers to be sorted
  * @size: size of array
  * @l: pointer to left array
  * @r: pointer to right array
@@ -15,7 +15,7 @@ void merge(int *array, int *l, int *r, size_t size)
 
 	size_left = size / 2;
 	size_right = size - size_left;
-	printf("Merging...\n");
+	printf("Merging from ...\n");
 	printf("[left]: ");
 	print_array(l, size_left);
 	printf("[right]: ");
@@ -34,7 +34,7 @@ void merge(int *array, int *l, int *r, size_t size)
 
 	while (j < size_right)
 		array[k++] = r[j++];
-	printf("[Done]: ");
+	printf("[Merge Done]: ");
 	print_array(array, size);
 }
 /**
