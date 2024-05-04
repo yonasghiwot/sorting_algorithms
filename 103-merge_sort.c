@@ -66,7 +66,7 @@ void Top_Down_SplitMerge(size_t start, size_t end, int *array, int *copy)
 }
 
 /**
- * merge_sort - sorts an array of integers in ascending 
+ * merge_sort - sorts an array of integers in ascending
  * order using the Merge sort algorithm
  * @array: array to sort
  * @size: size of the array
