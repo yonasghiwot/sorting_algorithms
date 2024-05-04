@@ -1,9 +1,10 @@
 #include "sort.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+void Top_Down_Merge(size_t start, size_t middle, size_t end, int *dest, int *source);
+void Top_Down_SplitMerge(size_t start, size_t end, int *array, int *copy);
 /**
- * Top_down_Merge- function taht sorts and merges the sub arrays in source
+ * Top_Down_Merge- function taht sorts and merges the sub arrays in source
  * @start: starting index for left sub array
  * @middle: end index for left sub array and
  * starting index for the right sub array
@@ -13,7 +14,7 @@
  *
  * Return: void
  */
-void Top_down_Merge(size_t start, size_t middle, size_t end, int *dest, int *source)
+void Top_Down_Merge(size_t start, size_t middle, size_t end, int *dest, int *source)
 {
 	size_t i, j, k;
 
